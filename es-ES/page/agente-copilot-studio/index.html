@@ -1333,6 +1333,38 @@ html[data-theme="light"] .lf-card:hover, html[data-theme="light"] .lf-project:ho
 .lf-gal-bar button:hover:not(:disabled){ background: rgba(0,0,0,.78); }
 .lf-gal-bar button:disabled{ opacity: 0; pointer-events: none; }
 .lf-gal-count{ margin-left: 0; font-size: 13px; }
+/* 04/10: painel ao vivo (Mobility Pulse): Power Pages -> Server Logic -> Databricks. Só tokens do tema (claro e escuro). */
+.lf-live{ border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--bg-elev-1); padding: 24px; }
+.lf-live-top{ display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; margin-bottom: 18px; }
+.lf-live-st{ display: inline-flex; align-items: center; gap: 8px; font-size: 13px; color: var(--text-muted); }
+.lf-live-dot{ width: 9px; height: 9px; border-radius: 50%; background: var(--text-dim); flex: 0 0 auto; }
+.lf-live[data-estado="ao-vivo"] .lf-live-dot{ background: var(--green); box-shadow: 0 0 0 4px color-mix(in srgb, var(--green) 22%, transparent); }
+.lf-live[data-estado="carregando"] .lf-live-dot{ background: var(--amber); animation: lfPulse 1s ease-in-out infinite; }
+@keyframes lfPulse { 50% { opacity: .35; } }
+@media (prefers-reduced-motion: reduce) { .lf-live[data-estado="carregando"] .lf-live-dot{ animation: none; } }
+.lf-live-btn{ border: 1px solid var(--border-strong); background: transparent; color: var(--text); border-radius: var(--r-full); padding: 8px 16px; font-size: 13px; font-weight: 600; cursor: pointer; min-height: 40px; }
+.lf-live-btn:hover{ background: var(--surface-hover, var(--bg-elev-2)); }
+.lf-live-btn:disabled{ opacity: .5; cursor: default; }
+.lf-live-kpis{ display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; }
+.lf-live-kpi{ border: 1px solid var(--border); border-radius: var(--r-md); padding: 14px 16px; background: var(--bg-elev-2); }
+.lf-live-kpi span{ display: block; font-size: 12px; color: var(--text-muted); }
+.lf-live-kpi b{ display: block; font-size: 26px; line-height: 1.2; color: var(--text); margin-top: 4px; font-variant-numeric: tabular-nums; }
+.lf-live-kpi small{ display: block; font-size: 12px; color: var(--text-dim); margin-top: 2px; }
+.lf-live-h{ margin: 22px 0 10px; font-size: 14px; font-weight: 600; color: var(--text); }
+.lf-live-bars{ display: flex; align-items: flex-end; gap: 4px; height: 160px; padding: 8px 0 0; border-bottom: 1px solid var(--border); }
+.lf-live-bar{ flex: 1 1 0; min-width: 0; background: color-mix(in srgb, var(--text) 22%, transparent); border-radius: 4px 4px 0 0; }
+.lf-live-bar.is-pico{ background: var(--green); }
+.lf-live-eixo{ display: flex; gap: 4px; margin-top: 6px; }
+.lf-live-eixo span{ flex: 1 1 0; min-width: 0; text-align: center; font-size: 11px; color: var(--text-dim); font-variant-numeric: tabular-nums; }
+.lf-live-rod{ margin: 14px 0 0; font-size: 13px; color: var(--text-muted); }
+@media (max-width: 720px) {
+  .lf-live{ padding: 16px; }
+  .lf-live-kpis{ grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .lf-live-kpi b{ font-size: 21px; }
+  .lf-live-bars{ height: 120px; gap: 2px; }
+  .lf-live-eixo{ gap: 2px; }
+  .lf-live-eixo span:nth-child(odd){ visibility: hidden; }
+}
 @media (max-width: 640px) { .lf-gal-bar button{ width: 40px; height: 40px; top: calc(50% - 70px); } .lf-gal-bar button[data-gal-prev]{ left: 8px; } .lf-gal-bar button[data-gal-next]{ right: 8px; } }
 /* 03/10: print real do Manaa em moldura de celular + pontos ao lado */
 .lf-real{ display: grid; grid-template-columns: minmax(0, 620px) minmax(0, 1fr); gap: 44px; align-items: center; }
@@ -2338,6 +2370,74 @@ footer a, footer a:hover, .footer a{ color: var(--text-muted) !important; }
     }
     if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', liga); else liga();
     window.addEventListener('load', liga);
+  })();
+</script>
+<script id="FBX-LIVE-MOBILIDADE" type="text/javascript">
+  /* 04/10: [data-fbx-live="mobilidade"] vira o painel ao vivo do Mobility Pulse. No Power Pages chama a Server Logic
+     mobilidade_nyc (o servidor consulta o Databricks; o navegador nunca vê o token). Sem servidor (GitHub Pages)
+     ou se a chamada falhar, mostra a fotografia da última execução e diz isso. */
+  (function () {
+    var FOTO = { resumo: { viagens: 21932, tarifa_media: 12.35, distancia_media_mi: 2.85, duracao_media_min: 15.1, inicio: "2016-01-01", fim: "2016-02-29" },
+      por_hora: [[0,745],[1,573],[2,445],[3,308],[4,250],[5,220],[6,475],[7,801],[8,1035],[9,1044],[10,965],[11,1012],[12,1060],[13,1094],[14,1107],[15,1172],[16,976],[17,1187],[18,1455],[19,1403],[20,1248],[21,1207],[22,1194],[23,956]],
+      quando: "04/10/2026" };
+    var TX = {
+      "pt-BR": { viagens: "Viagens", tarifa: "Tarifa média", dist: "Distância média", dur: "Duração média", mi: "milhas", min: "minutos", us: "por corrida",
+        periodo: "de {a} a {b}", hora: "Viagens por hora do dia", pico: "pico às {h}h", btn: "Consultar de novo", load: "Consultando o Databricks pelo servidor…",
+        vivo: "Ao vivo: consulta feita agora pelo servidor do Power Pages em {s} s.", foto: "Fotografia da execução de {d}. Esta cópia estática não tem servidor; no site em Power Pages o painel consulta ao vivo.",
+        falha: "O servidor não respondeu agora; mostrando a fotografia de {d}.", frio: "O primeiro acesso do dia pode levar ~25 s: o warehouse serverless acorda." },
+      "en-US": { viagens: "Trips", tarifa: "Average fare", dist: "Average distance", dur: "Average duration", mi: "miles", min: "minutes", us: "per ride",
+        periodo: "from {a} to {b}", hora: "Trips by hour of day", pico: "peak at {h}h", btn: "Query again", load: "Querying Databricks from the server…",
+        vivo: "Live: queried just now by the Power Pages server in {s} s.", foto: "Snapshot from the {d} run. This static copy has no server; on the Power Pages site the panel queries live.",
+        falha: "The server did not answer now; showing the {d} snapshot.", frio: "The first visit of the day can take ~25 s while the serverless warehouse wakes up." },
+      "es-ES": { viagens: "Viajes", tarifa: "Tarifa media", dist: "Distancia media", dur: "Duración media", mi: "millas", min: "minutos", us: "por viaje",
+        periodo: "del {a} al {b}", hora: "Viajes por hora del día", pico: "pico a las {h}h", btn: "Consultar de nuevo", load: "Consultando Databricks desde el servidor…",
+        vivo: "En vivo: consulta hecha ahora por el servidor de Power Pages en {s} s.", foto: "Foto de la ejecución del {d}. Esta copia estática no tiene servidor; en el sitio en Power Pages el panel consulta en vivo.",
+        falha: "El servidor no respondió ahora; mostrando la foto del {d}.", frio: "El primer acceso del día puede tardar ~25 s: el warehouse serverless se despierta." } };
+    var ESTATICO = /github\.io$/.test(location.hostname);
+    function fmt(n, lang, dec) { return Number(n).toLocaleString(lang, { minimumFractionDigits: dec || 0, maximumFractionDigits: dec || 0 }); }
+    function dt(iso, lang) { var p = String(iso).split("-"); return lang === "en-US" ? p[1] + "/" + p[2] + "/" + p[0] : p[2] + "/" + p[1] + "/" + p[0]; }
+    function desenha(el, d, estado, msg) {
+      var lang = el.getAttribute("data-lang") || "pt-BR", t = TX[lang] || TX["pt-BR"], r = d.resumo, h = d.por_hora;
+      var max = 0, pico = 0; h.forEach(function (x) { if (x[1] > max) { max = x[1]; pico = x[0]; } });
+      el.setAttribute("data-estado", estado);
+      var kp = [[t.viagens, fmt(r.viagens, lang), t.periodo.replace("{a}", dt(r.inicio, lang)).replace("{b}", dt(r.fim, lang))],
+                [t.tarifa, "US$ " + fmt(r.tarifa_media, lang, 2), t.us], [t.dist, fmt(r.distancia_media_mi, lang, 2), t.mi], [t.dur, fmt(r.duracao_media_min, lang, 1), t.min]];
+      el.innerHTML = '<div class="lf-live-top"><span class="lf-live-st" role="status" aria-live="polite"><span class="lf-live-dot"></span><span class="lf-live-msg"></span></span>'
+        + (ESTATICO ? '' : '<button type="button" class="lf-live-btn">' + t.btn + '</button>') + '</div>'
+        + '<div class="lf-live-kpis">' + kp.map(function (k) { return '<div class="lf-live-kpi"><span>' + k[0] + '</span><b>' + k[1] + '</b><small>' + k[2] + '</small></div>'; }).join("") + '</div>'
+        + '<div class="lf-live-h">' + t.hora + ' · ' + t.pico.replace("{h}", pico) + '</div>'
+        + '<div class="lf-live-bars" role="img" aria-label="' + t.hora + ', ' + t.pico.replace("{h}", pico) + '">' + h.map(function (x) { return '<div class="lf-live-bar' + (x[0] === pico ? ' is-pico' : '') + '" style="height:' + Math.max(3, Math.round(x[1] / max * 100)) + '%" title="' + x[0] + 'h · ' + fmt(x[1], lang) + '"></div>'; }).join("") + '</div>'
+        + '<div class="lf-live-eixo" aria-hidden="true">' + h.map(function (x) { return '<span>' + x[0] + '</span>'; }).join("") + '</div>'
+        + '<p class="lf-live-rod"></p>';
+      el.querySelector(".lf-live-msg").textContent = msg;
+      el.querySelector(".lf-live-rod").textContent = estado === "ao-vivo" ? "" : t.frio;
+      var b = el.querySelector(".lf-live-btn"); if (b) { b.disabled = estado === "carregando"; b.addEventListener("click", function () { busca(el); }); }
+    }
+    function busca(el) {
+      var lang = el.getAttribute("data-lang") || "pt-BR", t = TX[lang] || TX["pt-BR"];
+      if (ESTATICO) { desenha(el, FOTO, "foto", t.foto.replace("{d}", FOTO.quando)); return; }
+      el.setAttribute("data-estado", "carregando");
+      var m = el.querySelector(".lf-live-msg"); if (m) m.textContent = t.load;
+      var b = el.querySelector(".lf-live-btn"); if (b) b.disabled = true;
+      var t0 = Date.now();
+      fetch("/_api/serverlogics/mobilidade_nyc", { credentials: "include", headers: { "Accept": "application/json" } })
+        .then(function (r) { return r.json(); })
+        .then(function (env) {
+          var d = typeof env.data === "string" ? JSON.parse(env.data) : env.data;   /* a Server Logic responde num envelope; o JSON vem em .data como texto */
+          if (!env.success || !d || !d.ok) throw new Error((d && d.error) || env.error || "sem dados");
+          desenha(el, d, "ao-vivo", t.vivo.replace("{s}", fmt((Date.now() - t0) / 1000, lang, 1)));
+        })
+        .catch(function () { desenha(el, FOTO, "foto", t.falha.replace("{d}", FOTO.quando)); });
+    }
+    function liga() {
+      document.querySelectorAll('[data-fbx-live="mobilidade"]').forEach(function (el) {
+        if (el.dataset.ok) return; el.dataset.ok = "1"; el.classList.add("lf-live");
+        var t = TX[el.getAttribute("data-lang")] || TX["pt-BR"];
+        desenha(el, FOTO, ESTATICO ? "foto" : "carregando", ESTATICO ? t.foto.replace("{d}", FOTO.quando) : t.load);
+        if (!ESTATICO) busca(el);
+      });
+    }
+    if (document.readyState === "loading") document.addEventListener("DOMContentLoaded", liga); else liga();
   })();
 </script>
 
