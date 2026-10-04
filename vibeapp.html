@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Atendimento de Suporte — demonstração</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/css/vibeapp.css" />
+    <script>
+      // pinta o fundo certo antes do React montar: sem isto, o iframe pisca branco
+      // dentro do site no tema escuro.
+      (function () {
+        var escuro = true;
+        try {
+          if (window.parent !== window) {
+            escuro = window.parent.document.documentElement.getAttribute('data-theme') !== 'light';
+          } else {
+            escuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+          }
+        } catch (e) {
+          escuro = window.matchMedia('(prefers-color-scheme: dark)').matches;
+        }
+        var raiz = document.documentElement;
+        if (escuro) raiz.classList.add('dark');
+        raiz.style.background = escuro ? '#0a0a0a' : '#f6f6f8';
+      })();
+    </script>
+    <style>
+      html, body { margin: 0; padding: 0; }
+      body { background: inherit; }
+    </style>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="assets/js/vibeapp.mjs"></script>
+  </body>
+</html>

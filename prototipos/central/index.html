@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Central de Monitoramentos · protótipo navegável · FBX</title>
+<meta name="description" content="Protótipo navegável da Central de Monitoramentos (Power Apps), montado com as telas reais do app. Dados fictícios.">
+<link rel="stylesheet" href="../assets/proto.css">
+</head>
+<body>
+<header class="top">
+  <div>
+    <span class="aviso">Protótipo navegável · telas reais do app · dados fictícios</span>
+    <h1>Central de Monitoramentos</h1>
+    <p class="sub">Clique nas áreas destacadas: menu lateral, troca de tema, chat do agente, editar e salvar.</p>
+  </div>
+  <a href="../../pt-BR/page/central-de-monitoramentos/">← Voltar para o projeto</a>
+</header>
+<main>
+  <div class="bar" role="toolbar" aria-label="Telas">
+    <button type="button" data-ir="painel">Painel</button>
+    <button type="button" data-ir="monitoramentos">Monitoramentos</button>
+    <button type="button" data-ir="editar">Editar</button>
+    <button type="button" data-ir="notificacoes">Notificações</button>
+    <button type="button" data-ir="disparos">Disparos</button>
+    <label><input type="checkbox" id="mostrar"> mostrar áreas clicáveis</label>
+  </div>
+  <div class="palco"><img id="tela" src="" alt=""><div id="areas"></div></div>
+  <p class="nome">Tela: <span id="nome"></span></p>
+</main>
+<footer>App Canvas real do Power Apps; as imagens são capturas dele, nos dois temas e no celular. No portfólio, o app roda num ambiente de desenvolvimento sem acesso público; por isso esta versão navegável.</footer>
+<script>
+const NAVD=[{x:.9,y:15,w:15.5,h:6,go:'painel',t:'Painel'},{x:.9,y:22.3,w:15.5,h:6,go:'monitoramentos',t:'Monitoramentos'},{x:.9,y:29.5,w:15.5,h:6,go:'notificacoes',t:'Notificações'},{x:.9,y:36.7,w:15.5,h:6,go:'disparos',t:'Disparos'},{x:.9,y:82,w:15.5,h:5.4,go:'tema',t:'Trocar tema'},{x:94.4,y:88.6,w:4.1,h:8.4,go:'chat',t:'Abrir/fechar o agente'}];
+const NAVM=[{x:46.2,y:1.4,w:7.6,h:3.8,go:'painel',t:'Painel'},{x:56.9,y:1.4,w:7.6,h:3.8,go:'monitoramentos',t:'Monitoramentos'},{x:67.7,y:1.4,w:7.6,h:3.8,go:'notificacoes',t:'Notificações'},{x:78.5,y:1.4,w:7.6,h:3.8,go:'disparos',t:'Disparos'},{x:89.2,y:1.4,w:7.6,h:3.8,go:'tema',t:'Trocar tema'},{x:80.5,y:91,w:14.4,h:6.6,go:'chat',t:'Abrir/fechar o agente'}];
+window.PROTO={base:'img/',inicio:'painel',comuns:{d:NAVD,m:NAVM},telas:{
+ painel:{nome:'Visão geral',img:'painel-{k}.jpg',chat:true},
+ monitoramentos:{nome:'Monitoramentos',img:'monitoramentos-{k}.jpg',chat:true,areas:{d:[{x:83,y:9.6,w:14.6,h:5.1,go:'editar',t:'Novo monitoramento'}].concat([24.9,42.3,59.7,77.2].map(y=>({x:89.7,y:y,w:6.9,h:5,go:'editar',t:'Editar'})))}},
+ editar:{nome:'Editar monitoramento',img:'editar-{k}.jpg',chat:true,areas:{d:[{x:21.4,y:87.4,w:15.4,h:5.7,go:'monitoramentos',t:'Salvar e voltar'}]}},
+ notificacoes:{nome:'Minhas notificações',img:'notificacoes-{k}.jpg',chat:true},
+ disparos:{nome:'Gestão de disparos',img:'disparos-{k}.jpg',chat:true}}};
+</script>
+<script src="../assets/proto.js"></script>
+</body>
+</html>
