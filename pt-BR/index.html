@@ -470,6 +470,14 @@ a{ color: var(--text) !important; text-decoration: none !important; }
 }
 .lf-project-head .lf-project-name{ flex: 1 1 auto !important; min-width: 0 !important; }
 .lf-project-head .lf-project-status{ flex: 0 0 auto !important; white-space: nowrap !important; padding-top: 6px !important; }
+/* 04/10: Home - 3 projetos em destaque, card inteiro clicável, status embaixo do nome (cabe em 1/3 da largura) */
+.lf-project-link{ display: flex !important; flex-direction: column; text-decoration: none !important; color: inherit !important; }
+.lf-home-destaques .lf-project-head{ flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+.lf-home-destaques .lf-project-status{ padding-top: 0 !important; }
+.lf-home-destaques .lf-tags{ margin-top: auto !important; }
+.lf-project-more{ margin-top: 0; padding-top: var(--s-4); font-size: 14px; font-weight: 600; color: var(--text); }
+.lf-project-link:hover .lf-project-more .lf-arrow{ transform: translateX(3px); }
+.lf-home-destaques-cta{ margin-top: var(--s-5) !important; }
 .lf-project-name{
     font-size: 20px !important;
     font-weight: 700 !important;
@@ -666,6 +674,8 @@ html, body{ height: auto !important; min-height: 100% !important; overflow-y: vi
 /* botoes/sugestoes (suggested actions) */
 
 /* links legiveis no dark */
+/* 04/10: nada sublinha no hover (o Bootstrap sublinha todo a:hover; ficava feio nos cards inteiros clicáveis). Link de texto corrido segue sublinhado sempre, regra mais específica abaixo */
+a:hover, a:focus, a:active{ text-decoration: none !important; }
 
 /* ---- send box ---- */
 /* input: vence a regra global de textarea/.form-control do site.
@@ -2444,7 +2454,7 @@ html[data-theme="light"] .lf-tp-stack img.lf-diag-light { display: block; }
 /* tela Projetos v2: roadmap e mini-diagrama do card */
 .lf-roadmap { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: var(--s-3) !important; list-style: none; padding: 0; margin: 0; counter-reset: none; }
 .lf-roadmap li { position: relative; display: flex !important; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 0 4px !important; background: none !important; border: 0 !important; }
-.lf-roadmap li::before { content: ''; position: absolute; top: 17px; left: calc(-50% + 22px); right: calc(50% + 22px); height: 2px; background: var(--green); opacity: .45; }
+.lf-roadmap li::before { content: ''; position: absolute; top: 17px; left: calc(-50% - var(--s-3) + 22px); /* 04/10: o centro do passo anterior fica a 50% + o gap da grade; sem o gap a linha ficava torta */ right: calc(50% + 22px); height: 2px; background: var(--green); opacity: .45; }
 .lf-roadmap li:first-child::before { display: none; }
 .lf-roadmap .lf-step-num { width: 36px; height: 36px; border-radius: 50%; display: inline-flex !important; align-items: center; justify-content: center; background: var(--green); color: var(--bg) !important; font-weight: 700; font-size: 13px; margin: 0 !important; position: relative; z-index: 1; }
 .lf-roadmap strong { font-size: 15px; color: var(--text); }
@@ -2466,6 +2476,8 @@ html[data-theme="light"] .lf-tp-stack img.lf-diag-light { display: block; }
 .lf-pg-node img { position: static !important; width: 32px !important; height: 32px !important; object-fit: contain; display: block; }
 html[data-theme="light"] .lf-pg-node img.lf-diag-dark, .lf-pg-node img.lf-diag-light { display: none; }
 html[data-theme="light"] .lf-pg-node img.lf-diag-light { display: block; }
+.lf-pg-node .lf-pg-fam { display: flex; justify-content: center; margin-top: -2px; font-style: normal; }
+.lf-pg-node .lf-pg-fam img { width: auto !important; height: 16px !important; }
 .lf-pg-node b { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.25; }
 .lf-pg-arrow { color: var(--text-dim); font-size: 16px; margin-bottom: 26px; flex: 0 0 auto; }
 .lf-tp-fonte, .lf-tp-apply-note, .lf-pg-head-count, .lf-tp-page .lf-demo-note { font-size: 13px !important; color: var(--text-muted) !important; }
@@ -2557,6 +2569,15 @@ html[data-theme="light"] .lf-pg-node img.lf-diag-light { display: block; }
 .lf-tp-stk img { width: 24px; height: 24px; display: block; object-fit: contain; }
 .lf-tp-stk img.lf-diag-light, html[data-theme="light"] .lf-tp-stk img.lf-diag-dark { display: none; }
 html[data-theme="light"] .lf-tp-stk img.lf-diag-light { display: block; }
+/* 04/10: no desktop, Entrega e Situação empilhadas à esquerda; Stack à direita com o rótulo NA FRENTE dos logos, ocupando o resto da linha */
+@media (min-width: 901px) {
+  .lf-tp-meta { display: grid; grid-template-columns: minmax(240px, 36%) minmax(0, 1fr); gap: var(--s-4) var(--s-6); }
+  .lf-tp-meta > li { grid-column: 1; }
+  .lf-tp-meta > li.lf-tp-meta-stack { grid-column: 2; grid-row: 1 / span 2; flex-direction: row; align-items: flex-start; gap: var(--s-4); }
+  .lf-tp-meta > li.lf-tp-meta-stack > span { padding-top: 13px; flex: 0 0 auto; }
+  .lf-tp-meta > li.lf-tp-meta-stack .lf-tp-stack-logos { margin-top: 0; }
+  .lf-tp-meta > li:has(.lf-tp-ai) { grid-column: 1 / -1; }
+}
 .lf-tp-hero-ctas { margin-top: var(--s-5) !important; }
 .lf-tp-psi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
 .lf-tp-psi .lf-card { display: flex; flex-direction: column; gap: var(--s-2); margin: 0; }
@@ -2676,52 +2697,40 @@ html[data-theme="light"] .lf-tp-stk img.lf-diag-light { display: block; }
 <div class="row sectionBlockLayout lf-section lf-section-elevated" data-component-theme="portalThemeColor2" style="display: flex; flex-wrap: wrap; text-align: left; min-height: auto;">
 <div class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">
 <div class="col-lg-12 columnBlockLayout" style="flex-grow: 1; display: flex; flex-direction: column; min-width: 300px;">
-<div class="lf-eyebrow-section">Projetos em produção</div>
-<h2 class="lf-h2">Coisas que estão rodando <br/>enquanto você lê isso.</h2>
+<div class="lf-eyebrow-section">Projetos em destaque</div>
+<h2 class="lf-h2">Três entregas <br/>para começar.</h2>
 </div>
 </div>
-<div class="container lf-grid-2" style="padding: 0px;">
-<div class="lf-project">
+<div class="container lf-grid-3 lf-home-destaques" style="padding: 0px;">
+<a class="lf-project lf-project-link" href="page/central-de-monitoramentos/">
+<div class="lf-project-head">
+<div class="lf-project-name">Central de Monitoramentos</div>
+<div class="lf-project-status"><span class="lf-status-dot"></span>Case real reconstruído</div>
+</div>
+<p class="lf-project-text">Monitora bases de dados, avisa o responsável e cobra a resposta no prazo. Cada pessoa vê só os próprios casos; o dono acompanha disparos e respostas.</p>
+<div class="lf-tags"><span class="lf-tag">Power Apps</span><span class="lf-tag">Power Automate</span><span class="lf-tag">SharePoint</span><span class="lf-tag">Copilot Studio</span></div>
+<span class="lf-project-more">Ver projeto <span class="lf-arrow">→</span></span>
+</a>
+<a class="lf-project lf-project-link" href="page/manaa/">
 <div class="lf-project-head">
 <div class="lf-project-name">Manaã</div>
 <div class="lf-project-status"><span class="lf-status-dot"></span>Em produção</div>
 </div>
-<p class="lf-project-text">SaaS de devocionais personalizados via WhatsApp. n8n self-hosted na Oracle Cloud, agentes OpenAI, ASAAS para cobrança, Postgres para retenção e Meta Graph API para entrega. Centenas de mensagens por dia, sem operador humano.</p>
-<div class="lf-tags">
-<span class="lf-tag">n8n</span><span class="lf-tag">OpenAI</span><span class="lf-tag">Postgres</span><span class="lf-tag">Meta API</span><span class="lf-tag">ASAAS</span>
-</div>
-</div>
-<div class="lf-project">
+<p class="lf-project-text">SaaS de devocionais personalizados no WhatsApp: agente de IA com memória, cobrança recorrente e rotina diária rodando sem operador humano.</p>
+<div class="lf-tags"><span class="lf-tag">n8n</span><span class="lf-tag">OpenAI</span><span class="lf-tag">Postgres</span><span class="lf-tag">WhatsApp</span></div>
+<span class="lf-project-more">Ver projeto <span class="lf-arrow">→</span></span>
+</a>
+<a class="lf-project lf-project-link" href="page/sap-build-apps/">
 <div class="lf-project-head">
-<div class="lf-project-name">Automações SAP corporativas</div>
+<div class="lf-project-name">Inventário patrimonial no SAP</div>
 <div class="lf-project-status"><span class="lf-status-dot"></span>Em produção</div>
 </div>
-<p class="lf-project-text">Robôs e workflows em SAP Build Process Automation (SAP BTP) rodando rotinas SAP, integrados a aprovações no Teams e dashboards Power BI. Substituem horas de trabalho manual diário em finanças, logística e compras de grandes empresas.</p>
-<div class="lf-tags">
-<span class="lf-tag">SAP Build</span><span class="lf-tag">SAP BTP</span><span class="lf-tag">Power BI</span><span class="lf-tag">Teams</span>
+<p class="lf-project-text">App de celular para inventário: o operador escaneia a etiqueta e um robô consulta o SAP via BAPI na hora da conferência.</p>
+<div class="lf-tags"><span class="lf-tag">SAP Build Apps</span><span class="lf-tag">SAP BPA</span><span class="lf-tag">BAPI</span></div>
+<span class="lf-project-more">Ver projeto <span class="lf-arrow">→</span></span>
+</a>
 </div>
-</div>
-<div class="lf-project">
-<div class="lf-project-head">
-<div class="lf-project-name">Copilot FBX</div>
-<div class="lf-project-status"><span class="lf-status-dot"></span>Demo neste site</div>
-</div>
-<p class="lf-project-text">O widget no canto inferior é um agente Copilot Studio integrado a este Power Pages. Pergunte qualquer coisa: ele responde com contexto, busca informação e pode abrir chamados. Vivo, neste momento.</p>
-<div class="lf-tags">
-<span class="lf-tag">Copilot Studio</span><span class="lf-tag">Power Pages</span><span class="lf-tag">Dataverse</span>
-</div>
-</div>
-<div class="lf-project">
-<div class="lf-project-head">
-<div class="lf-project-name">Este site</div>
-<div class="lf-project-status"><span class="lf-status-dot"></span>Live</div>
-</div>
-<p class="lf-project-text">Construído inteiramente no Power Pages com CSS customizado e CMS via VS Code Web. Privado por design: só pessoas autorizadas no tenant conseguem ver. Showcase do que dá pra fazer com a stack Microsoft.</p>
-<div class="lf-tags">
-<span class="lf-tag">Power Pages</span><span class="lf-tag">Dataverse</span><span class="lf-tag">CSS</span>
-</div>
-</div>
-</div>
+<div class="container lf-cta-row lf-home-destaques-cta" style="padding: 0px;"><a class="lf-cta-ghost" href="page/projetos/">Ver todos os projetos <span class="lf-arrow">→</span></a></div>
 </div>
 <div class="row sectionBlockLayout lf-section lf-contact" id="contato" style="display: flex; flex-wrap: wrap; text-align: left; min-height: auto;">
 <div class="container" style="padding: 0px; display: flex; flex-wrap: wrap;">

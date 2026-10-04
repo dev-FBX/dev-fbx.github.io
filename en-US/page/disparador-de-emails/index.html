@@ -468,6 +468,14 @@ a{ color: var(--text) !important; text-decoration: none !important; }
 }
 .lf-project-head .lf-project-name{ flex: 1 1 auto !important; min-width: 0 !important; }
 .lf-project-head .lf-project-status{ flex: 0 0 auto !important; white-space: nowrap !important; padding-top: 6px !important; }
+/* 04/10: Home - 3 projetos em destaque, card inteiro clicável, status embaixo do nome (cabe em 1/3 da largura) */
+.lf-project-link{ display: flex !important; flex-direction: column; text-decoration: none !important; color: inherit !important; }
+.lf-home-destaques .lf-project-head{ flex-direction: column !important; align-items: flex-start !important; gap: 6px !important; }
+.lf-home-destaques .lf-project-status{ padding-top: 0 !important; }
+.lf-home-destaques .lf-tags{ margin-top: auto !important; }
+.lf-project-more{ margin-top: 0; padding-top: var(--s-4); font-size: 14px; font-weight: 600; color: var(--text); }
+.lf-project-link:hover .lf-project-more .lf-arrow{ transform: translateX(3px); }
+.lf-home-destaques-cta{ margin-top: var(--s-5) !important; }
 .lf-project-name{
     font-size: 20px !important;
     font-weight: 700 !important;
@@ -664,6 +672,8 @@ html, body{ height: auto !important; min-height: 100% !important; overflow-y: vi
 /* botoes/sugestoes (suggested actions) */
 
 /* links legiveis no dark */
+/* 04/10: nada sublinha no hover (o Bootstrap sublinha todo a:hover; ficava feio nos cards inteiros clicáveis). Link de texto corrido segue sublinhado sempre, regra mais específica abaixo */
+a:hover, a:focus, a:active{ text-decoration: none !important; }
 
 /* ---- send box ---- */
 /* input: vence a regra global de textarea/.form-control do site.
@@ -2442,7 +2452,7 @@ html[data-theme="light"] .lf-tp-stack img.lf-diag-light { display: block; }
 /* tela Projetos v2: roadmap e mini-diagrama do card */
 .lf-roadmap { display: grid !important; grid-template-columns: repeat(6, minmax(0, 1fr)) !important; gap: var(--s-3) !important; list-style: none; padding: 0; margin: 0; counter-reset: none; }
 .lf-roadmap li { position: relative; display: flex !important; flex-direction: column; align-items: center; text-align: center; gap: 6px; padding: 0 4px !important; background: none !important; border: 0 !important; }
-.lf-roadmap li::before { content: ''; position: absolute; top: 17px; left: calc(-50% + 22px); right: calc(50% + 22px); height: 2px; background: var(--green); opacity: .45; }
+.lf-roadmap li::before { content: ''; position: absolute; top: 17px; left: calc(-50% - var(--s-3) + 22px); /* 04/10: o centro do passo anterior fica a 50% + o gap da grade; sem o gap a linha ficava torta */ right: calc(50% + 22px); height: 2px; background: var(--green); opacity: .45; }
 .lf-roadmap li:first-child::before { display: none; }
 .lf-roadmap .lf-step-num { width: 36px; height: 36px; border-radius: 50%; display: inline-flex !important; align-items: center; justify-content: center; background: var(--green); color: var(--bg) !important; font-weight: 700; font-size: 13px; margin: 0 !important; position: relative; z-index: 1; }
 .lf-roadmap strong { font-size: 15px; color: var(--text); }
@@ -2464,6 +2474,8 @@ html[data-theme="light"] .lf-tp-stack img.lf-diag-light { display: block; }
 .lf-pg-node img { position: static !important; width: 32px !important; height: 32px !important; object-fit: contain; display: block; }
 html[data-theme="light"] .lf-pg-node img.lf-diag-dark, .lf-pg-node img.lf-diag-light { display: none; }
 html[data-theme="light"] .lf-pg-node img.lf-diag-light { display: block; }
+.lf-pg-node .lf-pg-fam { display: flex; justify-content: center; margin-top: -2px; font-style: normal; }
+.lf-pg-node .lf-pg-fam img { width: auto !important; height: 16px !important; }
 .lf-pg-node b { font-size: 12px; font-weight: 600; color: var(--text); line-height: 1.25; }
 .lf-pg-arrow { color: var(--text-dim); font-size: 16px; margin-bottom: 26px; flex: 0 0 auto; }
 .lf-tp-fonte, .lf-tp-apply-note, .lf-pg-head-count, .lf-tp-page .lf-demo-note { font-size: 13px !important; color: var(--text-muted) !important; }
@@ -2555,6 +2567,15 @@ html[data-theme="light"] .lf-pg-node img.lf-diag-light { display: block; }
 .lf-tp-stk img { width: 24px; height: 24px; display: block; object-fit: contain; }
 .lf-tp-stk img.lf-diag-light, html[data-theme="light"] .lf-tp-stk img.lf-diag-dark { display: none; }
 html[data-theme="light"] .lf-tp-stk img.lf-diag-light { display: block; }
+/* 04/10: no desktop, Entrega e Situação empilhadas à esquerda; Stack à direita com o rótulo NA FRENTE dos logos, ocupando o resto da linha */
+@media (min-width: 901px) {
+  .lf-tp-meta { display: grid; grid-template-columns: minmax(240px, 36%) minmax(0, 1fr); gap: var(--s-4) var(--s-6); }
+  .lf-tp-meta > li { grid-column: 1; }
+  .lf-tp-meta > li.lf-tp-meta-stack { grid-column: 2; grid-row: 1 / span 2; flex-direction: row; align-items: flex-start; gap: var(--s-4); }
+  .lf-tp-meta > li.lf-tp-meta-stack > span { padding-top: 13px; flex: 0 0 auto; }
+  .lf-tp-meta > li.lf-tp-meta-stack .lf-tp-stack-logos { margin-top: 0; }
+  .lf-tp-meta > li:has(.lf-tp-ai) { grid-column: 1 / -1; }
+}
 .lf-tp-hero-ctas { margin-top: var(--s-5) !important; }
 .lf-tp-psi { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-4); }
 .lf-tp-psi .lf-card { display: flex; flex-direction: column; gap: var(--s-2); margin: 0; }
