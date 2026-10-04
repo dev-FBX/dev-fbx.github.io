@@ -22,8 +22,8 @@
     '.fbxc-x:hover{background:var(--surface-hover,rgba(255,255,255,.08))}' +
     '.fbxc-body{flex:1 1 auto;min-height:0}.fbxc-msg{padding:16px;font-size:14px;color:var(--text-muted,#a1a1aa)}' +
     /* o CSS do site (texto esmaecido em p/li) vazava para dentro das bolhas: cores fixas por tema */
-    '.fbxc-body .webchat__bubble__content,.fbxc-body .webchat__bubble__content *{color:var(--fbxc-tx) !important;opacity:1 !important}' +
-    '.fbxc-body .webchat__bubble--from-user .webchat__bubble__content,.fbxc-body .webchat__bubble--from-user .webchat__bubble__content *{color:var(--fbxc-tx-user) !important}' +
+    '.fbxc-body .webchat__bubble__content,.fbxc-body .webchat__bubble__content *,.fbxc-body .webchat__render-markdown,.fbxc-body .webchat__render-markdown *,.fbxc-body .webchat__text-content,.fbxc-body .webchat__text-content *{color:var(--fbxc-tx) !important;-webkit-text-fill-color:var(--fbxc-tx) !important;opacity:1 !important}' +
+    '.fbxc-body .webchat__bubble--from-user .webchat__bubble__content,.fbxc-body .webchat__bubble--from-user .webchat__bubble__content *,.fbxc-body .webchat__bubble--from-user .webchat__text-content *{color:var(--fbxc-tx-user) !important;-webkit-text-fill-color:var(--fbxc-tx-user) !important}' +
     '.fbxc-body .webchat__bubble__content a{text-decoration:underline !important}' +
     '.fbxc-body p,.fbxc-body li{margin:0 0 6px !important;font-size:14px !important;line-height:1.5 !important}' +
     '.fbxc-box{--fbxc-tx:#f2f2f2;--fbxc-tx-user:#111113}.fbxc-box.is-claro{--fbxc-tx:#111113;--fbxc-tx-user:#ffffff}' +
