@@ -1300,11 +1300,13 @@ html[data-theme="light"] .lf-card:hover, html[data-theme="light"] .lf-project:ho
 /* 03/10: galeria horizontal de telas */
 .lf-gal{ position: relative; outline: none; }
 .lf-gal{ overflow: hidden; border-radius: var(--r-lg); }
+.lf-gal-track{ cursor: grab; user-select: none; -webkit-user-select: none; -webkit-touch-callout: none; }
+.lf-gal-track:active{ cursor: grabbing; }
 .lf-gal-track{ display: flex; transition: transform .35s ease; will-change: transform; }
 @media (prefers-reduced-motion: reduce) { .lf-gal-track{ transition: none; } }
 .lf-gal-track::-webkit-scrollbar{ display: none; }
 .lf-gal-item{ flex: 0 0 100%; box-sizing: border-box; margin: 0; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--bg-elev-2); overflow: hidden; }
-.lf-gal-item img{ display: block; width: 100%; height: auto; background: var(--bg-elev-1); }
+.lf-gal-item img{ display: block; width: 100%; height: auto; background: var(--bg-elev-1); -webkit-user-drag: none; user-select: none; }
 .lf-gal-phone .lf-gal-item picture{ display: block; padding: 24px 0; background: var(--bg-elev-1); }
 .lf-gal-phone .lf-gal-item img{ width: auto; max-width: calc(100% - 32px); height: 600px; max-height: 72vh; margin: 0 auto; border-radius: 28px; border: 6px solid var(--border-strong); box-sizing: content-box; object-fit: contain; }
 @media (max-width: 640px) { .lf-gal-phone .lf-gal-item img{ height: 480px; } }
@@ -2293,9 +2295,36 @@ footer a, footer a:hover, .footer a{ color: var(--text-muted) !important; }
     function liga() {
       document.querySelectorAll('.lf-gal').forEach(function (g) {
         if (g.dataset.ok) return; g.dataset.ok = '1';
-        var tr = g.querySelector('.lf-gal-track'), x0 = null;
-        tr.addEventListener('touchstart', function (e) { x0 = e.touches[0].clientX; }, { passive: true });
-        tr.addEventListener('touchend', function (e) { if (x0 === null) return; var dx = e.changedTouches[0].clientX - x0; x0 = null; if (Math.abs(dx) > 40) passo(g, dx < 0 ? 1 : -1); }, { passive: true });
+        var tr = g.querySelector('.lf-gal-track'), x0 = null, y0 = 0, dx = 0, eixo = '', mouse = false, t0 = 0, puxou = false;
+        /* 04/10b: arrastar acompanhando o dedo (toque) e o mouse (PC). Trava o eixo nos primeiros px: horizontal
+           move o carrossel e bloqueia a rolagem; vertical solta pra página rolar. Ignora as setas. */
+        function ini(x, y, alvo) { if (alvo.closest('[data-gal-prev],[data-gal-next]')) return false; x0 = x; y0 = y; dx = 0; eixo = ''; puxou = false; t0 = Date.now(); return true; }
+        function mov(x, y) {
+          if (x0 === null) return false;
+          var ddx = x - x0, ddy = y - y0;
+          if (!eixo) { if (Math.abs(ddx) < 8 && Math.abs(ddy) < 8) return false; eixo = Math.abs(ddx) > Math.abs(ddy) ? 'x' : 'y'; }
+          if (eixo !== 'x') { x0 = null; return false; }
+          var i = +g.dataset.i || 0, n = tr.children.length;
+          dx = ddx; if ((i === 0 && dx > 0) || (i === n - 1 && dx < 0)) dx = dx / 3;
+          puxou = true; tr.style.transition = 'none';
+          tr.style.transform = 'translateX(calc(' + (-100 * i) + '% + ' + dx + 'px))';
+          return true;
+        }
+        function fim() {
+          if (x0 === null && !puxou) return; x0 = null; tr.style.transition = '';
+          if (!puxou) return;
+          var w = g.clientWidth || 1, rapido = Math.abs(dx) > 30 && Date.now() - t0 < 300;
+          if (Math.abs(dx) > w * 0.18 || rapido) passo(g, dx < 0 ? 1 : -1); else passo(g, 0);
+          puxou = false; dx = 0;
+        }
+        g.addEventListener('touchstart', function (e) { if (e.touches.length > 1) { x0 = null; return; } ini(e.touches[0].clientX, e.touches[0].clientY, e.target); }, { passive: true });
+        g.addEventListener('touchmove', function (e) { if (mov(e.touches[0].clientX, e.touches[0].clientY) && e.cancelable) e.preventDefault(); }, { passive: false });
+        g.addEventListener('touchend', fim, { passive: true });
+        g.addEventListener('touchcancel', fim, { passive: true });
+        g.addEventListener('mousedown', function (e) { if (e.button !== 0) return; if (ini(e.clientX, e.clientY, e.target)) { mouse = true; e.preventDefault(); } });
+        window.addEventListener('mousemove', function (e) { if (mouse) mov(e.clientX, e.clientY); });
+        window.addEventListener('mouseup', function () { if (mouse) { mouse = false; fim(); } });
+        g.addEventListener('dragstart', function (e) { e.preventDefault(); });
         mostra(g, 0);
       });
     }
