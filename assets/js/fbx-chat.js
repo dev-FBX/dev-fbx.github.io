@@ -21,6 +21,12 @@
     '.fbxc-x{margin-left:auto;width:36px;height:36px;border:0;border-radius:8px;background:transparent;color:var(--text,#f2f2f2);font-size:18px;cursor:pointer}' +
     '.fbxc-x:hover{background:var(--surface-hover,rgba(255,255,255,.08))}' +
     '.fbxc-body{flex:1 1 auto;min-height:0}.fbxc-msg{padding:16px;font-size:14px;color:var(--text-muted,#a1a1aa)}' +
+    /* o CSS do site (texto esmaecido em p/li) vazava para dentro das bolhas: cores fixas por tema */
+    '.fbxc-body .webchat__bubble__content,.fbxc-body .webchat__bubble__content *{color:var(--fbxc-tx) !important;opacity:1 !important}' +
+    '.fbxc-body .webchat__bubble--from-user .webchat__bubble__content,.fbxc-body .webchat__bubble--from-user .webchat__bubble__content *{color:var(--fbxc-tx-user) !important}' +
+    '.fbxc-body .webchat__bubble__content a{text-decoration:underline !important}' +
+    '.fbxc-body p,.fbxc-body li{margin:0 0 6px !important;font-size:14px !important;line-height:1.5 !important}' +
+    '.fbxc-box{--fbxc-tx:#f2f2f2;--fbxc-tx-user:#111113}.fbxc-box.is-claro{--fbxc-tx:#111113;--fbxc-tx-user:#ffffff}' +
     '@media (max-width:600px){.fbxc-box{right:8px;left:8px;width:auto;bottom:80px;height:calc(100vh - 100px)}}';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
   var ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 11h.01M12 11h.01M15.5 11h.01"/></svg>';
@@ -37,7 +43,7 @@
     Promise.all([carrega(WEBCHAT), fetch(TOKEN_URL).then(function (r) { return r.json(); })]).then(function (res) {
       var token = res[1].token; if (!token) throw new Error('sem token');
       corpo.innerHTML = '';
-      var claro = tema() === 'light';
+      var claro = tema() === 'light'; box.classList.toggle('is-claro', claro);
       var dl = window.WebChat.createDirectLine({ token: token });
       var store = window.WebChat.createStore({}, function () { return function (next) { return function (action) {
         if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
@@ -53,7 +59,7 @@
           sendBoxTextColor: claro ? '#111113' : '#f2f2f2', sendBoxButtonColor: claro ? '#111113' : '#f2f2f2', hideUploadButton: true,
           suggestedActionLayout: 'stacked', accent: claro ? '#111113' : '#f2f2f2', subtle: claro ? '#5a5a63' : '#a1a1aa', timestampColor: claro ? '#5a5a63' : '#8a8a92'
         },
-        strings: { TEXT_INPUT_PLACEHOLDER: TX.ph }
+        overrideLocalizedStrings: { TEXT_INPUT_PLACEHOLDER: TX.ph }
       }, corpo);
     }).catch(function () { iniciado = false; corpo.innerHTML = '<div class="fbxc-msg">' + TX.erro + '</div>'; });
   }
