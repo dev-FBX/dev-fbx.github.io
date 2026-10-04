@@ -1,0 +1,334 @@
+/* Copiado do Header do site (Power Pages) para o chat da vitrine ficar igual (04/10). */
+
+/* ===== Chat Copilot FBX — TEMA DARK (13/09) =====
+   Paleta: janela #16161a (um degrau acima do fundo #0a0a0a do site, pra não virar
+   um buraco preto), header #1b1b20, balão do bot #26262b, balão do usuário
+   invertido (#fafafa com texto escuro, igual ao CTA primário do site).
+   Contrastes: #fafafa/#16161a 17:1 · #a1a1aa/#16161a 6.9:1 · #18181b/#fafafa 16:1.
+   ROOT amplo: .pva-floating-style / .pva-container englobam window-container,
+   window, widget E a conversa. */
+.pva-container, .pva-floating-style {
+  --fbx-chat-bg:#16161a; --fbx-chat-bg-2:#1b1b20; --fbx-chat-bg-3:#26262b;
+  --fbx-chat-border:#2a2a30; --fbx-chat-border-strong:#3f3f46;
+  --fbx-chat-text:#fafafa; --fbx-chat-text-2:#a1a1aa;
+  --colorBrandBackground:var(--fbx-chat-bg-3) !important;
+  --colorBrandBackground2:var(--fbx-chat-bg-3) !important;
+  --colorCompoundBrandBackground:var(--fbx-chat-text) !important;
+  --colorBrandBackgroundHover:var(--fbx-chat-border-strong) !important;
+  --colorCompoundBrandBackgroundHover:var(--fbx-chat-text) !important;
+  --colorBrandForeground1:var(--fbx-chat-text) !important;
+  --colorBrandForegroundLink:var(--fbx-chat-text) !important;
+  --colorNeutralForeground1:var(--fbx-chat-text) !important;
+  --colorNeutralForeground2:var(--fbx-chat-text-2) !important;
+  --colorNeutralForegroundOnBrand:#18181b !important;
+  --colorNeutralForegroundInverted:var(--fbx-chat-text) !important;
+  --colorNeutralBackground1:var(--fbx-chat-bg) !important;
+  --colorNeutralBackground1Hover:var(--fbx-chat-bg-3) !important;
+  --colorNeutralStroke1:var(--fbx-chat-border) !important;
+  color-scheme: dark;
+}
+/* fonte unica: [class] tem especificidade (0,2,0) e vence o CSS do webchat
+   (que carrega depois do meu e usa classes (0,1,0)) */
+.pva-floating-style, .pva-container,
+.pva-floating-style [class], .pva-container [class],
+.pva-floating-style *, .pva-container * {
+  font-family:'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif !important;
+}
+/* MATA bordas/sombras aninhadas E impede o CSS do site de vazar borda no chat */
+.pva-floating-style *, .pva-container * {
+  border-color:transparent !important;
+  box-shadow:none !important;
+}
+/* janela: fundo escuro elevado, borda fina, cantos do design system */
+.pva-embedded-web-chat-window-container {
+  background:var(--fbx-chat-bg) !important;
+  border:1px solid var(--fbx-chat-border) !important;
+  border-radius:var(--r-lg) !important;
+  box-shadow:0 24px 64px rgba(0,0,0,.6) !important;
+  overflow:hidden !important;
+}
+.pva-embedded-web-chat-window-container > div,
+.pva-embedded-web-chat-window,
+.webchat__basic-transcript, .webchat__basic-transcript__filler,
+.webchat__basic-transcript__scrollable { background:var(--fbx-chat-bg) !important; }
+.pva-floating-style, .pva-container { color:var(--fbx-chat-text) !important; }
+/* LAUNCHER (fechado): circulo escuro limpo, sem moldura */
+.pva-embedded-web-chat,
+.pva-embedded-web-chat-widget-container { background:transparent !important; }
+.pva-embedded-web-chat-widget {
+  background:#18181b !important; border:1px solid var(--fbx-chat-border-strong) !important;
+  box-shadow:0 6px 20px rgba(0,0,0,.35) !important;
+}
+/* ---- header (barra de 56px: [voltar] [avatar] título [nova conversa] [tela cheia] [fechar]) ---- */
+.pva-embedded-web-chat-window-container > div > div:first-child {
+  background:var(--fbx-chat-bg-2) !important;
+  border-bottom:1px solid var(--fbx-chat-border) !important;
+  color:var(--fbx-chat-text) !important;
+  padding:0 var(--s-2) 0 var(--s-3) !important;
+  gap:var(--s-1) !important;
+}
+.pva-embedded-web-chat-window-container > div > div:first-child *,
+.pva-floating-style header *, .pva-container header * {
+  color:var(--fbx-chat-text) !important; fill:var(--fbx-chat-text) !important; background:transparent !important;
+}
+/* "Voltar" some: a tela de abertura foi pulada (skipSingleBotWelcomeScreen), então
+   voltar levaria pra uma tela que não existe mais. Esconde o wrapper inteiro (40px). */
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Back"]),
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Voltar"]),
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Atrás"]) { display:none !important; }
+/* título: Space Grotesk, alinhado ao avatar */
+.pva-embedded-web-chat-window-container > div > div:first-child > div:not(:has(button)) {
+  font-family:'Space Grotesk', system-ui, sans-serif !important;
+  font-weight:600 !important; font-size:17px !important; letter-spacing:-0.02em !important;
+  padding-left:var(--s-1) !important;
+}
+/* botões do header: alvo 40px, hover sutil, sem linha embaixo */
+.pva-embedded-web-chat-window-container > div > div:first-child button,
+.pva-floating-style header button, .pva-container header button {
+  border:none !important; border-bottom:none !important; background:transparent !important;
+  min-width:40px !important; min-height:40px !important; border-radius:var(--r-md) !important;
+  transition:background-color 150ms var(--ease-out) !important;
+}
+.pva-embedded-web-chat-window-container > div > div:first-child button:hover { background:var(--fbx-chat-bg-3) !important; }
+.pva-embedded-web-chat-window-container > div > div:first-child button:focus-visible {
+  outline:2px solid var(--fbx-chat-text) !important; outline-offset:-2px !important;
+}
+/* ---- transcript ---- */
+/* balao do bot: cinza elevado + texto claro. O widget aplica
+   .webchat__bubble:not(.webchat__bubble--from-user) .webchat__bubble__content {#F3F2F1 !important}
+   (0,3,0) — a regra abaixo precisa de (0,4,0) pra vencer. */
+.webchat__bubble__content.webchat__bubble__content,
+.webchat__bubble:not(.webchat__bubble--from-user) .webchat__bubble__content.webchat__bubble__content {
+  background:var(--fbx-chat-bg-3) !important; border-radius:var(--r-md) !important;
+}
+.webchat__text-content.webchat__text-content,
+.webchat__text-content.webchat__text-content * { color:var(--fbx-chat-text) !important; }
+/* balao do usuario: invertido (claro), como o CTA primario do site */
+.webchat__bubble--from-user .webchat__bubble__content.webchat__bubble__content { background:var(--fbx-chat-text) !important; }
+.webchat__bubble--from-user .webchat__text-content.webchat__text-content,
+.webchat__bubble--from-user .webchat__text-content.webchat__text-content * { color:#18181b !important; }
+/* horario / status */
+.webchat__activity-status, .webchat__activity-status * { color:var(--fbx-chat-text-2) !important; }
+/* digitando… */
+.webchat__typing-indicator, .webchat__typing-indicator * { filter:invert(1) !important; border-radius:var(--r-md) !important; overflow:hidden !important; }
+/* cards de referencia / Adaptive Cards: fundo elevado, UMA borda fina */
+.pva-floating-style [class*="ac-"][class], .pva-container [class*="ac-"][class],
+.webchat__adaptive-card-renderer,
+.pva-floating-style [class*="citation" i], .pva-floating-style [class*="reference" i] {
+  background:var(--fbx-chat-bg-2) !important;
+  border:1px solid var(--fbx-chat-border) !important;
+  color:var(--fbx-chat-text) !important;
+}
+/* botoes/sugestoes (suggested actions) */
+.webchat__suggested-action, .webchat__suggested-actions button {
+  background:transparent !important; color:var(--fbx-chat-text) !important;
+  border:1px solid var(--fbx-chat-border-strong) !important; border-radius:var(--r-full) !important;
+}
+/* links legiveis no dark */
+/* 04/10: nada sublinha no hover (o Bootstrap sublinha todo a:hover; ficava feio nos cards inteiros clicáveis). Link de texto corrido segue sublinhado sempre, regra mais específica abaixo */
+a:hover, a:focus, a:active { text-decoration: none !important; }
+.pva-floating-style a, .pva-container a { color:var(--fbx-chat-text) !important; text-decoration:underline !important; text-underline-offset:2px !important; }
+/* ---- send box ---- */
+/* input: vence a regra global de textarea/.form-control do site.
+   font-size 16px é OBRIGATÓRIO: o iOS dá zoom automático em qualquer campo < 16px
+   (o textarea do Web Chat vem com 14px — era a causa do zoom ao tocar no campo, 13/09). */
+.pva-floating-style textarea, .pva-container textarea,
+.pva-floating-style .fui-Textarea__textarea, .pva-container .fui-Textarea__textarea,
+.pva-floating-style .webchat__send-box-text-box__input, .pva-container .webchat__send-box-text-box__input,
+.pva-floating-style .webchat__auto-resize-textarea__textarea, .pva-container .webchat__auto-resize-textarea__textarea,
+.pva-floating-style input[type="text"], .pva-container input[type="text"] {
+  background:transparent !important; color:var(--fbx-chat-text) !important; border:none !important;
+  border-radius:0 !important; caret-color:var(--fbx-chat-text) !important;
+  font-size:16px !important; line-height:1.4 !important;
+}
+.pva-floating-style textarea::placeholder, .pva-container textarea::placeholder { color:var(--fbx-chat-text-2) !important; opacity:1 !important; }
+/* launcher do chat: alvo de toque mínimo 44x44 (era 40x38) */
+.pva-embedded-web-chat-widget, .pva-embedded-web-chat-widget > button {
+  min-width:44px !important; min-height:44px !important;
+}
+/* caixa do input (sendbox): borda visivel pra ler como campo de digitar */
+.webchat__send-box { background:var(--fbx-chat-bg) !important; }
+.webchat__send-box__main,
+.pva-floating-style [class*="sendbox" i], .pva-container [class*="sendbox" i],
+.pva-floating-style .fui-Textarea, .pva-container .fui-Textarea {
+  background:var(--fbx-chat-bg-2) !important; border:1px solid var(--fbx-chat-border-strong) !important; border-radius:var(--r-md) !important;
+  transition:border-color 150ms var(--ease-out) !important;
+}
+.webchat__send-box__main:focus-within,
+.pva-floating-style .fui-Textarea:focus-within, .pva-container .fui-Textarea:focus-within {
+  border-color:var(--fbx-chat-text) !important;
+}
+.webchat__send-box__main .webchat__send-box-text-box { background:transparent !important; }
+.webchat__send-box svg, .pva-floating-style [class*="sendbox" i] svg, .pva-container [class*="sendbox" i] svg {
+  fill:var(--fbx-chat-text) !important; color:var(--fbx-chat-text) !important;
+}
+.webchat__send-box button, .webchat__send-box button:disabled, .webchat__send-box button[aria-disabled="true"],
+.webchat__send-box button:hover, .webchat__send-box button:active, .webchat__send-box button:focus { background:transparent !important; border-radius:var(--r-sm) !important; border:none !important; box-shadow:none !important; }
+.webchat__send-box button:disabled svg, .webchat__send-box button[aria-disabled="true"] svg { opacity:.45 !important; }
+/* iOS: depois do toque o botão ficava com um retângulo claro (focus ring/tap highlight do Fluent) */
+.webchat__send-box button, .webchat__send-box button:focus, .webchat__send-box button:focus-visible, .webchat__send-box button:active,
+.pva-embedded-web-chat-window-container button, .pva-embedded-web-chat-widget button { -webkit-tap-highlight-color:transparent !important; outline:none !important; }
+.webchat__send-box button::before, .webchat__send-box button::after { display:none !important; }
+.webchat__send-box button:focus-visible svg { outline:2px solid var(--fbx-chat-text) !important; outline-offset:3px !important; border-radius:4px !important; }
+.webchat__send-box button:hover svg { opacity:1 !important; }
+/* aviso de IA no rodape do chat */
+.pva-privacy-message, .pva-privacy-message * { color:var(--fbx-chat-text-2) !important; background:var(--fbx-chat-bg) !important; }
+/* alça de redimensionar */
+.pva-embedded-web-chat-resize-handle-grip { background:var(--fbx-chat-border-strong) !important; }
+/* o button DENTRO do widget vem branco (40x38) e tapa o circulo -> transparente */
+.pva-embedded-web-chat-widget > button,
+.pva-embedded-web-chat-widget button.fui-Button {
+  background:transparent !important; border:none !important; border-radius:50% !important;
+}
+/* icone do bot no launcher: branco/visivel sobre o circulo escuro */
+.pva-embedded-web-chat-widget-icon,
+.pva-embedded-web-chat-widget svg,
+.pva-embedded-web-chat-widget button svg {
+  fill:#ffffff !important; color:#ffffff !important;
+}
+/* ---- ajustes 13/09 (feedback Luigi) ---- */
+/* o texto markdown dentro do balão do bot também vem com fundo #F3F2F1 próprio */
+.webchat__bubble:not(.webchat__bubble--from-user) .webchat__text-content.webchat__text-content,
+.webchat__text-content.webchat__text-content--is-markdown { background:transparent !important; }
+/* referências/citações ("2 referências"): caixas brancas -> elevadas */
+.webchat__link-definitions__list-item-box, .webchat__link-definitions__list-item-box--as-link,
+.webchat__link-definitions summary, .webchat__link-definitions__header {
+  background:var(--fbx-chat-bg-2) !important; color:var(--fbx-chat-text) !important;
+  border:1px solid var(--fbx-chat-border) !important; border-radius:var(--r-sm) !important;
+}
+.webchat__link-definitions__badge { background:var(--fbx-chat-bg-3) !important; color:var(--fbx-chat-text) !important; }
+.webchat__link-definitions *, .webchat__link-definitions__list-item-text { color:var(--fbx-chat-text) !important; }
+.webchat__link-definitions svg { fill:var(--fbx-chat-text-2) !important; }
+/* launcher REDONDO de verdade (vinha oval por causa do min-width/min-height + padding do botão) */
+.pva-embedded-web-chat-widget {
+  width:56px !important; height:56px !important; min-width:56px !important; min-height:56px !important;
+  border-radius:50% !important; padding:0 !important; display:flex !important; align-items:center !important; justify-content:center !important;
+}
+.pva-embedded-web-chat-widget > button, .pva-embedded-web-chat-widget button.fui-Button {
+  width:56px !important; height:56px !important; min-width:56px !important; min-height:56px !important; padding:0 !important;
+}
+/* botão "blocos" (lista de agentes) volta pra tela de abertura que foi pulada -> some.
+   Ele divide o aria-label "Chat window" com o avatar; o que o distingue é estar no grupo do Fechar. */
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Close"]) > button[aria-label="Chat window"],
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Fechar"]) > button[aria-label="Chat window"],
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Cerrar"]) > button[aria-label="Chat window"],
+.pva-embedded-web-chat-window-container div:has(> button[aria-label="Fechar"]) > button[aria-label="Janela de chat"] { display:none !important; }
+/* launcher 52px, icone centralizado */
+.pva-embedded-web-chat-widget {
+  width:52px !important; height:52px !important; min-width:52px !important; min-height:52px !important;
+}
+.pva-embedded-web-chat-widget > button, .pva-embedded-web-chat-widget button.fui-Button {
+  width:52px !important; height:52px !important; min-width:52px !important; min-height:52px !important;
+  display:flex !important; align-items:center !important; justify-content:center !important; margin:0 !important;
+}
+.pva-embedded-web-chat-widget button > *, .pva-embedded-web-chat-widget .fui-Button__icon {
+  margin:0 !important; display:flex !important; align-items:center !important; justify-content:center !important;
+  width:24px !important; height:24px !important; line-height:0 !important;
+}
+.pva-embedded-web-chat-widget svg, .pva-embedded-web-chat-widget img { width:24px !important; height:24px !important; display:block !important; margin:0 !important; }
+.pva-embedded-web-chat-widget-icon { width:24px !important; height:24px !important; display:flex !important; align-items:center !important; justify-content:center !important; margin:0 !important; overflow:visible !important; }
+/* flash branco ao abrir: o FluentProvider da tela de abertura redefine os tokens inline
+   no próprio elemento; precisa sobrescrever nele (e no que vier com fundo do Fluent). */
+.pva-container .fui-FluentProvider, .pva-floating-style .fui-FluentProvider,
+.pva-container [class*="fui-FluentProvider"], .pva-floating-style [class*="fui-FluentProvider"] {
+  --colorNeutralBackground1:var(--fbx-chat-bg) !important;
+  --colorNeutralBackground2:var(--fbx-chat-bg-2) !important;
+  --colorNeutralBackground3:var(--fbx-chat-bg-3) !important;
+  --colorNeutralForeground1:var(--fbx-chat-text) !important;
+  --colorNeutralForeground2:var(--fbx-chat-text-2) !important;
+  --colorNeutralStroke1:var(--fbx-chat-border) !important;
+  background:var(--fbx-chat-bg) !important; color:var(--fbx-chat-text) !important;
+}
+.pva-embedded-web-chat-window-container > div > div,
+.pva-embedded-web-chat-window > div { background-color:var(--fbx-chat-bg) !important; }
+.pva-embedded-web-chat-window-container > div > div:first-child { background-color:var(--fbx-chat-bg-2) !important; }
+/* hover/pressed dos botões (Fluent usa tokens Subtle*; sem isso vira branco no toque) */
+.pva-container, .pva-floating-style,
+.pva-container .fui-FluentProvider, .pva-floating-style .fui-FluentProvider {
+  --colorSubtleBackground:transparent !important;
+  --colorSubtleBackgroundHover:var(--fbx-chat-bg-3) !important;
+  --colorSubtleBackgroundPressed:var(--fbx-chat-border-strong) !important;
+  --colorSubtleBackgroundSelected:var(--fbx-chat-bg-3) !important;
+  --colorNeutralForeground2Hover:var(--fbx-chat-text) !important;
+  --colorNeutralForeground2Pressed:var(--fbx-chat-text) !important;
+  --colorNeutralForeground2BrandHover:var(--fbx-chat-text) !important;
+  --colorNeutralForeground2BrandPressed:var(--fbx-chat-text) !important;
+  --colorTransparentBackgroundHover:var(--fbx-chat-bg-3) !important;
+  --colorTransparentBackgroundPressed:var(--fbx-chat-border-strong) !important;
+}
+.pva-embedded-web-chat-window-container button:hover,
+.pva-embedded-web-chat-window-container button:active,
+.pva-embedded-web-chat-window-container button:focus,
+.pva-embedded-web-chat-window-container button:hover *,
+.pva-embedded-web-chat-window-container button:active * {
+  color:var(--fbx-chat-text) !important; fill:var(--fbx-chat-text) !important;
+}
+.pva-embedded-web-chat-window-container button:hover { background:var(--fbx-chat-bg-3) !important; }
+.pva-embedded-web-chat-window-container button:active { background:var(--fbx-chat-border-strong) !important; }
+.pva-embedded-web-chat-window-container button:hover svg, .pva-embedded-web-chat-window-container button:active svg { background:transparent !important; }
+@media (hover:none) { .pva-embedded-web-chat-window-container button:hover { background:transparent !important; } }
+/* "tela cheia" sai; entra o botão "nova conversa" injetado pelo script FBX-CHAT-RESTART */
+.pva-embedded-web-chat-window-container button[aria-label="Expand chat to full screen"],
+.pva-embedded-web-chat-window-container button[aria-label="Tela cheia"],
+.pva-embedded-web-chat-window-container button[aria-label="Full screen"],
+.pva-embedded-web-chat-window-container button[aria-label="Pantalla completa"] { display:none !important; }
+.fbx-chat-restart { width:40px !important; height:40px !important; display:inline-flex !important; align-items:center !important; justify-content:center !important; cursor:pointer !important; }
+.pva-embedded-web-chat-window-container button.fbx-chat-restart svg,
+.pva-embedded-web-chat-window-container button.fbx-chat-restart svg path { stroke:var(--fbx-chat-text) !important; fill:none !important; background:transparent !important; }
+.pva-embedded-web-chat-window-container button.fbx-chat-restart svg { width:20px !important; height:20px !important; }
+/* avatar do header não é botão de navegação */
+.pva-embedded-web-chat-window-container > div > div:first-child button:has(img) { pointer-events:none !important; }
+html[data-theme="light"] .pva-container, html[data-theme="light"] .pva-floating-style {
+  --fbx-chat-bg:#ffffff; --fbx-chat-bg-2:#f3f3f5; --fbx-chat-bg-3:#ececf0;
+  --fbx-chat-border:#e1e1e6; --fbx-chat-border-strong:#c6c6ce;
+  --fbx-chat-text:#111113; --fbx-chat-text-2:#5a5a63;
+  color-scheme: light;
+}
+html[data-theme="light"] .pva-embedded-web-chat-widget { background:#111113 !important; }
+html[data-theme="light"] .webchat__bubble--from-user .webchat__bubble__content.webchat__bubble__content { background:#111113 !important; }
+html[data-theme="light"] .webchat__bubble--from-user .webchat__text-content.webchat__text-content,
+html[data-theme="light"] .webchat__bubble--from-user .webchat__text-content.webchat__text-content * { color:#fafafa !important; }
+html[data-theme="light"] .webchat__typing-indicator, html[data-theme="light"] .webchat__typing-indicator * { filter:none !important; }
+html[data-theme="light"] .pva-embedded-web-chat-window-container { box-shadow:0 24px 64px rgba(0,0,0,.18) !important; }
+/* botão do tema */
+.lf-theme-btn { display:inline-flex !important; align-items:center !important; justify-content:center !important; width:36px !important; height:36px !important; border-radius:var(--r-full) !important; border:1px solid var(--border) !important; background:var(--bg-elev-1) !important; color:var(--text-muted) !important; cursor:pointer !important; padding:0 !important; transition:color 150ms var(--ease-out), background-color 150ms var(--ease-out) !important; }
+.lf-theme-btn:hover { color:var(--text) !important; background:var(--surface-hover) !important; }
+.lf-theme-btn:focus-visible { outline:2px solid var(--text) !important; outline-offset:2px !important; }
+.pva-embedded-web-chat-widget { position:relative !important; }
+.pva-embedded-web-chat-widget > button, .pva-embedded-web-chat-widget button.fui-Button { position:absolute !important; inset:0 !important; width:100% !important; height:100% !important; margin:0 !important; background:transparent !important; }
+.pva-embedded-web-chat-widget button svg, .pva-embedded-web-chat-widget button img { display:none !important; }
+.pva-embedded-web-chat-widget::before {
+  content:'' !important; position:absolute !important; inset:0 !important; margin:auto !important; width:24px !important; height:26px !important;
+  background:url("data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20fill%3D%22none%22%20viewBox%3D%224%201.2%2040%2043.5%22%3E%3Cpath%20d%3D%22M32.7243%2017.5558C32.8164%2017.6201%2032.9045%2017.6891%2032.9883%2017.7624C32.9935%2017.6752%2032.9961%2017.5873%2032.9961%2017.4988V8.59629C32.9961%206.14042%2030.981%204.14955%2028.4953%204.14955L21.4931%204.14855L21.4947%202.66828L21.481%202.46715C21.3817%201.74366%2020.754%201.18604%2019.9945%201.18604L19.7909%201.19957C19.0586%201.29772%2018.4942%201.91788%2018.4942%202.66828L18.4926%204.14855L11.4923%204.14955C9.00657%204.14955%206.99149%206.14042%206.99149%208.59629V17.4988C6.99149%2019.9547%209.00657%2021.9456%2011.4923%2021.9456H27.0634C27.0765%2021.9114%2027.0891%2021.877%2027.1011%2021.8425L27.1188%2021.7902L28.0194%2019.0545L28.0277%2019.0313C28.2406%2018.4357%2028.6352%2017.9203%2029.1569%2017.5558C29.6786%2017.1913%2030.3018%2016.9957%2030.9406%2016.9957C31.5794%2016.9957%2032.2026%2017.1913%2032.7243%2017.5558ZM15.4916%2010.0785C16.8717%2010.0785%2017.9906%2011.1839%2017.9906%2012.5475C17.9906%2013.9111%2016.8717%2015.0165%2015.4916%2015.0165C14.1114%2015.0165%2012.9926%2013.9111%2012.9926%2012.5475C12.9926%2011.1839%2014.1114%2010.0785%2015.4916%2010.0785ZM24.4786%2010.0785C25.8588%2010.0785%2026.9777%2011.1839%2026.9777%2012.5475C26.9777%2013.9111%2025.8588%2015.0165%2024.4786%2015.0165C23.0985%2015.0165%2021.9796%2013.9111%2021.9796%2012.5475C21.9796%2011.1839%2023.0985%2010.0785%2024.4786%2010.0785ZM22.0791%2024.9731L22.3042%2024.9008H8.49884C6.01312%2024.9008%203.99805%2026.8917%203.99805%2029.3476V31.1407C3.99805%2033.3004%204.95153%2035.3526%206.60906%2036.7605C9.73535%2039.4161%2014.2138%2040.7137%2019.9938%2040.7137C24.1464%2040.7137%2027.6285%2040.0439%2030.4214%2038.6821C29.9884%2038.6012%2029.5756%2038.4292%2029.212%2038.1752C28.6903%2037.8108%2028.2957%2037.2953%2028.0829%2036.6997L28.0746%2036.6765L27.1735%2033.9394L27.1724%2033.9362C27.0415%2033.5447%2026.8442%2033.179%2026.5899%2032.8544C26.4962%2032.7348%2026.3949%2032.6209%2026.2863%2032.5133L25.5685%2031.996L24.8508%2031.6336L22.0791%2030.7443L22.0556%2030.7361C21.4531%2030.5263%2020.931%2030.137%2020.5617%2029.6217C20.1923%2029.1063%2019.9938%2028.4904%2019.9938%2027.8587C19.9938%2027.227%2020.1923%2026.6111%2020.5617%2026.0957C20.931%2025.5804%2021.4531%2025.1911%2022.0556%2024.9813L22.0791%2024.9731ZM27.7029%2031.1179C27.8706%2031.2842%2028.0272%2031.4602%2028.1718%2031.6448C28.5656%2032.1475%2028.871%2032.714%2029.0734%2033.3209L29.9691%2036.0418C30.044%2036.2515%2030.183%2036.4331%2030.3669%2036.5615C30.5508%2036.69%2030.7705%2036.759%2030.9957%2036.759C31.221%2036.759%2031.4407%2036.69%2031.6246%2036.5615C31.7886%2036.4469%2031.9169%2036.2901%2031.9959%2036.1086C32.0055%2036.0867%2032.0143%2036.0644%2032.0224%2036.0418L32.9181%2033.3209C33.1966%2032.4937%2033.6668%2031.742%2034.2911%2031.1256C34.9155%2030.5092%2035.6769%2030.0451%2036.5148%2029.7701L39.2709%2028.8858C39.4833%2028.8119%2039.6672%2028.6746%2039.7973%2028.4931C39.9275%2028.3116%2039.9973%2028.0947%2039.9973%2027.8723C39.9973%2027.6499%2039.9275%2027.433%2039.7973%2027.2515C39.6672%2027.07%2039.4833%2026.9328%2039.2709%2026.8588L39.2157%2026.8452L36.4597%2025.9609C35.6218%2025.6859%2034.8604%2025.2218%2034.236%2024.6054C33.6117%2023.989%2033.1415%2023.2373%2032.863%2022.4101L31.9673%2019.6892C31.8923%2019.4795%2031.7533%2019.2979%2031.5695%2019.1695C31.3856%2019.041%2031.1659%2018.972%2030.9406%2018.972C30.7154%2018.972%2030.4957%2019.041%2030.3118%2019.1695C30.1279%2019.2979%2029.9889%2019.4795%2029.914%2019.6892L29.0183%2022.4101L28.9954%2022.4775C28.7199%2023.2724%2028.2667%2023.9963%2027.6692%2024.5954C27.0548%2025.2114%2026.3044%2025.6787%2025.4767%2025.9609L22.7206%2026.8452C22.5082%2026.9192%2022.3243%2027.0564%2022.1941%2027.2379C22.064%2027.4194%2021.9942%2027.6363%2021.9942%2027.8587C21.9942%2028.0811%2022.064%2028.298%2022.1941%2028.4795C22.3243%2028.661%2022.5082%2028.7983%2022.7206%2028.8722L25.4767%2029.7565C26.3161%2030.0329%2027.0784%2030.4991%2027.7029%2031.1179ZM42.0327%2038.6654L43.5638%2039.1566L43.5944%2039.1642C43.7125%2039.2053%2043.8147%2039.2815%2043.8869%2039.3824C43.9592%2039.4832%2043.998%2039.6037%2043.998%2039.7272C43.998%2039.8508%2043.9592%2039.9713%2043.8869%2040.0721C43.8147%2040.173%2043.7125%2040.2492%2043.5944%2040.2903L42.0633%2040.7816C41.5978%2040.9344%2041.1748%2041.1922%2040.8279%2041.5347C40.4811%2041.8771%2040.2199%2042.2947%2040.0651%2042.7542L39.5675%2044.2659C39.5259%2044.3824%2039.4487%2044.4832%2039.3465%2044.5546C39.2444%2044.626%2039.1223%2044.6643%2038.9972%2044.6643C38.872%2044.6643%2038.75%2044.626%2038.6478%2044.5546C38.5457%2044.4832%2038.4684%2044.3824%2038.4268%2044.2659L37.9292%2042.7542C37.7755%2042.2933%2037.5147%2041.8742%2037.1678%2041.5304C36.8209%2041.1866%2036.3974%2040.9276%2035.931%2040.774L34.3999%2040.2828C34.2819%2040.2417%2034.1797%2040.1654%2034.1074%2040.0646C34.0351%2039.9637%2033.9963%2039.8432%2033.9963%2039.7197C33.9963%2039.5962%2034.0351%2039.4756%2034.1074%2039.3748C34.1797%2039.274%2034.2819%2039.1977%2034.3999%2039.1566L35.931%2038.6654C36.3909%2038.5086%2036.8077%2038.249%2037.1491%2037.9068C37.4904%2037.5645%2037.7469%2037.149%2037.8986%2036.6927L38.3962%2035.1811C38.4378%2035.0646%2038.515%2034.9637%2038.6172%2034.8923C38.7193%2034.821%2038.8414%2034.7827%2038.9665%2034.7827C39.0917%2034.7827%2039.2137%2034.821%2039.3159%2034.8923C39.418%2034.9637%2039.4953%2035.0646%2039.5369%2035.1811L40.0345%2036.6927C40.1893%2037.1523%2040.4504%2037.5699%2040.7973%2037.9123C41.1442%2038.2547%2041.5672%2038.5126%2042.0327%2038.6654Z%22%20fill%3D%22%23ffffff%22%3E%3C%2Fpath%3E%3C%2Fsvg%3E") center / contain no-repeat !important; pointer-events:none !important;
+}
+
+/* citações das respostas com base de conhecimento: some o bloco "1 referência" e os marcadores [1] (Luigi 14/09) */
+.webchat__link-definitions, .webchat__render-markdown__citation, .webchat__basic-transcript sup, .webchat__basic-transcript a[href^="cite-"], .webchat__basic-transcript a[href^="#cite"] { display: none !important; }
+/* botão de anexo: uploads estão desligados no agente */
+.webchat__upload-button, .webchat__send-box__button.webchat__upload-button { display: none !important; }
+.webchat__send-box button[aria-label="Upload file"], .webchat__send-box button[aria-label="Carregar arquivo"], .webchat__send-box button[aria-label="Anexar"], .webchat__send-box button[aria-label="Attach"], .webchat__send-box button[aria-label="Adjuntar"], .webchat__send-box label[for*="upload"], .webchat__send-box input[type="file"] { display: none !important; }
+/* ===== Chat no celular (13/09 noite) ===== */
+/* iOS: o toque deixava o "shade" de hover do Web Chat aceso no botão enviar (retângulo claro) */
+.webchat__icon-button__shade { display:none !important; }
+/* launcher: o bbox do ícone inclui as estrelinhas (embaixo/direita); o robô parecia deslocado pra cima/esquerda.
+   Nudge de 2px/1px pra centralizar pela massa visual, não pelo bbox */
+.pva-embedded-web-chat-widget::before { transform:translate(2px, 1px) !important; }
+/* chat aberto no celular: o chat é mais alto que a área visível do Safari e o dedo rolava a PÁGINA por baixo.
+   Trava a página (position:fixed no body, com o scroll guardado) e limita o chat à altura dinâmica da viewport */
+@media (max-width: 768px) {
+  html.fbx-chat-open, html.fbx-chat-open body { overflow:hidden !important; height:100% !important; overscroll-behavior:none !important; }
+  html.fbx-chat-open body { position:fixed !important; width:100% !important; left:0 !important; top:var(--fbx-lock-top, 0px) !important; }
+  .pva-embedded-web-chat, .pva-embedded-web-chat-window-container { max-height:100dvh !important; }
+  .webchat__basic-transcript__scrollable { overscroll-behavior:contain !important; -webkit-overflow-scrolling:touch !important; touch-action:pan-y !important; }
+}
+/* ===== Chat: caixa de texto (14/09) — o textarea tinha 16px/36px mas o "doppelganger" que dita a altura ficava em 14px/20px → cursor cortado e rolagem estranha ===== */
+.webchat__send-box textarea, .webchat__auto-resize-textarea__doppelganger { font-size: 16px !important; line-height: 22px !important; padding: 7px 0 !important; box-sizing: border-box !important; }
+.webchat__auto-resize-textarea, .webchat__auto-resize-textarea__doppelganger, .webchat__send-box textarea { min-height: 36px !important; }
+.webchat__auto-resize-textarea { overflow: visible !important; }
+.webchat__send-box textarea { overflow-y: auto !important; scrollbar-width: none; background: transparent !important; }
+.webchat__send-box textarea::-webkit-scrollbar { display: none; }
+.webchat__send-box textarea::placeholder { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.webchat__send-box textarea, .webchat__auto-resize-textarea, .webchat__auto-resize-textarea__doppelganger { border: 0 !important; outline: none !important; box-shadow: none !important; }
+.webchat__send-box .webchat__send-box-text-box { padding-right: 44px !important; }
+/* a Microsoft fixa height:calc(100% - 20px)!important no textarea (fica 20px menor que a caixa → rola) — vencer por especificidade */
+.webchat__auto-resize-textarea .webchat__auto-resize-textarea__textarea.webchat__send-box-text-box__html-text-area.webchat__send-box-text-box__html-text-area { height: 100% !important; top: 0 !important; }
