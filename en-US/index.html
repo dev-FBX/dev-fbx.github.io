@@ -1486,6 +1486,9 @@ html[data-theme="light"] .lf-real-phone{ box-shadow: 0 16px 40px rgba(0,0,0,.12)
 }
 /* Hover: nunca sublinhar; item de menu vira "botão" (fundo suave) */
 a:hover, a:focus, a:active, a:focus-visible, a:hover *, a:active *, .navbar-nav > li > a:hover, .navbar-nav > li > a:focus{ text-decoration: none !important; }
+/* 04/10: o theme.css/portalbasictheme.css têm a:not(.btn):hover { underline !important } (0,2,1), que vencia a regra acima
+   no toque do celular (hover "grudado" no card). Mesma regra com html na frente = (0,2,2). */
+html a:not(.btn):hover, html a:not(.btn):focus, html a:not(.btn):active, html a:not(.btn):hover *, html a:not(.btn):active *{ text-decoration: none !important; }
 a.lf-path, a.lf-path:hover, a.lf-path:active, a.lf-path:focus, a.lf-path *{ text-decoration: none !important; }
 @media (hover: none) { .lf-card:hover, .lf-project:hover, a.lf-path:hover{ transform: none !important; box-shadow: none !important; } }
 .navbar-nav > li > a{ border-radius: var(--r-sm) !important; }
@@ -2876,6 +2879,6 @@ html[data-theme="light"] .lf-tp-stk img.lf-diag-light { display: block; }
 
 
 
-<script defer="" src="../assets/js/fbx-chat.js?v=1791158689"></script></body>
+<script defer="" src="../assets/js/fbx-chat.js?v=1791160046"></script></body>
 </html>
 

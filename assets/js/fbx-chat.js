@@ -37,7 +37,8 @@
     '.fbxc .fbxc-body .webchat__send-box-text-box{padding:10px 12px !important;align-self:flex-start}' +
     '.fbxc .fbxc-body .webchat__send-box__main{position:relative}' +
     '.fbxc .fbxc-body .webchat__send-box__main > .webchat__send-box-text-box{flex:1 1 100%;width:100%}' +
-    '.fbxc .fbxc-body .webchat__send-box__main > :last-child:not(.webchat__send-box-text-box){position:absolute;right:6px;bottom:4px}' +
+    '.fbxc .fbxc-body .webchat__send-box__main > :last-child:not(.webchat__send-box-text-box){position:absolute;right:0;bottom:2px}' +
+    '.fbxc .fbxc-body .webchat__send-button{width:40px !important;min-width:40px !important;padding:0 !important;display:flex !important;align-items:center !important;justify-content:center !important}' +
     '.fbxc .fbxc-body .webchat__stacked-layout__avatar-gutter{display:none !important}' +
     '.fbxc .fbxc-body .webchat__stacked-layout__main{padding-left:0}' +
     '.fbxc .fbxc-body .webchat__bubble__content,.fbxc .fbxc-body .webchat__bubble__content p,.fbxc .fbxc-body .webchat__bubble__content li,.fbxc .fbxc-body .webchat__text-content{font-size:15px !important;line-height:1.6 !important;margin:0 !important}' +
@@ -67,7 +68,7 @@
     '</div></div>';
   document.body.appendChild(raiz);
   var fab = raiz.querySelector('.fbxc-fab'), box = raiz.querySelector('.fbxc-box'), corpo = raiz.querySelector('.fbxc-body');
-  var aberto = false, iniciado = false;
+  var aberto = false, iniciado = false, atual = null;
 
   function carrega(src) { return new Promise(function (ok, erro) { if (window.WebChat) return ok(); var s = document.createElement('script'); s.src = src; s.onload = ok; s.onerror = erro; document.head.appendChild(s); }); }
   function conversa() {
@@ -75,8 +76,9 @@
     corpo.innerHTML = '<div class="fbxc-msg">…</div>';
     Promise.all([carrega(WEBCHAT), fetch(TOKEN_URL).then(function (r) { return r.json(); })]).then(function (res) {
       var token = res[1].token; if (!token) throw new Error('sem token');
-      corpo.innerHTML = '';
-      var dl = window.WebChat.createDirectLine({ token: token });
+      if (atual) { try { atual.end(); } catch (e) {} }
+      corpo.innerHTML = ''; var alvo = document.createElement('div'); alvo.style.height = '100%'; corpo.appendChild(alvo);
+      var dl = window.WebChat.createDirectLine({ token: token }); atual = dl;
       var store = window.WebChat.createStore({}, function () { return function (next) { return function (action) {
         if (action.type === 'DIRECT_LINE/CONNECT_FULFILLED') {
           dl.postActivity({ type: 'event', name: 'startConversation', locale: lang, from: { id: 'visitante', role: 'user' } }).subscribe();
@@ -85,7 +87,7 @@
       window.WebChat.renderWebChat({ directLine: dl, store: store, locale: lang,
         styleOptions: { hideUploadButton: true, botAvatarInitials: '', userAvatarInitials: '', bubbleBorderWidth: 0, bubbleFromUserBorderWidth: 0,
           bubbleBorderRadius: 8, bubbleFromUserBorderRadius: 8, bubbleMinHeight: 0, paddingRegular: 12, sendBoxHeight: 82, sendBoxTextWrap: true, primaryFont: "'Inter','Segoe UI',system-ui,sans-serif" },
-        overrideLocalizedStrings: { TEXT_INPUT_PLACEHOLDER: TX.ph } }, corpo);
+        overrideLocalizedStrings: { TEXT_INPUT_PLACEHOLDER: TX.ph } }, alvo);
     }).catch(function () { iniciado = false; corpo.innerHTML = '<div class="fbxc-msg">' + TX.erro + '</div>'; });
   }
   function abre() { aberto = true; box.classList.add('is-open'); fab.style.display = 'none'; if (!iniciado) conversa(); }
