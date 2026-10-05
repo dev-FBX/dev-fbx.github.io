@@ -2623,6 +2623,10 @@ html[data-theme="light"] .lf-pg-node img.lf-diag-light { display: block; }
 .lf-pg-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--s-5); margin-top: var(--s-6); }
 @media (max-width: 1024px) { .lf-pg-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
 @media (max-width: 640px) { .lf-pg-grid { grid-template-columns: 1fr; gap: var(--s-4); } }
+/* 04/10: Home - 4 destaques em 2x2 (mesmo card da página Projetos), 1 coluna no celular */
+.lf-home-feat-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); width: 100%; }
+@media (max-width: 640px) { .lf-home-feat-grid { grid-template-columns: 1fr; } }
+.lf-home-feat .lf-home-destaques-cta { width: 100%; margin-top: var(--s-5); }
 .lf-pg-card { position: relative; display: flex; flex-direction: column; min-width: 0; border: 1px solid var(--border); border-radius: var(--r-lg); background: var(--bg-elev-1); overflow: hidden; transition: border-color var(--m-fast, .15s) var(--ease-out), transform var(--m-fast, .15s) var(--ease-out); }
 .lf-pg-card:hover { border-color: var(--border-strong); transform: translateY(-2px); }
 .lf-pg-card:focus-within { outline: 2px solid var(--text); outline-offset: 3px; }
