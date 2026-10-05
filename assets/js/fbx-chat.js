@@ -19,10 +19,10 @@
   var lk = document.createElement('link'); lk.rel = 'stylesheet'; lk.href = base + 'assets/css/fbx-chat.css' + ver; document.head.appendChild(lk);
   /* só posição e esqueleto; cor, borda, bolhas e caixa de texto vêm do fbx-chat.css (o mesmo do Power Pages) */
   var css = '' +
-    '.fbxc .fbxc-fab{position:fixed;right:26px;bottom:24px;z-index:2147483000;width:56px;height:56px;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer}' +
-    '.fbxc .fbxc-fab > button{width:100%;height:100%;border:0;border-radius:50%;background:transparent;display:flex;align-items:center;justify-content:center;cursor:pointer;padding:0}' +
-    '.fbxc .fbxc-fab svg{width:24px;height:24px;color:var(--fbx-chat-text);fill:none;stroke:currentColor}' +
-    '.fbxc .pva-embedded-web-chat-window-container.fbxc-box{position:fixed;right:16px;top:94px;bottom:16px;z-index:2147483001;width:min(500px,calc(100vw - 32px));display:none}' +
+    '.fbxc .fbxc-fab{position:fixed;right:16px;bottom:16px;z-index:2147483000}' +
+    '.fbxc .fbxc-fab .pva-embedded-web-chat-widget{cursor:pointer}' +
+    '.fbxc .fbxc-fab button{border:0;cursor:pointer;padding:0}' +
+    '.fbxc .pva-embedded-web-chat-window-container.fbxc-box{position:fixed;right:16px;bottom:16px;z-index:2147483001;width:min(500px,calc(100% - 32px));height:min(740px,calc(100dvh - 32px));display:none}' +
     '.fbxc .fbxc-box.is-open{display:block}' +
     '.fbxc .fbxc-box > div{display:flex;flex-direction:column;height:100%}' +
     '.fbxc .fbxc-head{display:flex;align-items:center;flex:0 0 57px;height:57px}' +
@@ -32,31 +32,36 @@
     '.fbxc .fbxc-head svg{width:20px;height:20px;fill:none !important;stroke:currentColor}' +
     '.fbxc .fbxc-body{flex:1 1 auto;min-height:0}' +
     '.fbxc .fbxc-msg{padding:16px;font-size:14px;color:var(--fbx-chat-text-2) !important}' +
-    '.fbxc .fbxc-body .webchat__send-box{padding:6px 12px 4px}' +
+    '.fbxc .fbxc-body .webchat__send-box{padding:6px 20px 4px}' +
     '.fbxc .fbxc-body .webchat__send-box__main{min-height:82px;align-items:flex-start}' +
     '.fbxc .fbxc-body .webchat__send-box-text-box{padding:10px 12px !important;align-self:flex-start}' +
-    '.fbxc .fbxc-body .webchat__send-box__main > :last-child{align-self:flex-end}' +
+    '.fbxc .fbxc-body .webchat__send-box__main{position:relative}' +
+    '.fbxc .fbxc-body .webchat__send-box__main > .webchat__send-box-text-box{flex:1 1 100%;width:100%}' +
+    '.fbxc .fbxc-body .webchat__send-box__main > :last-child:not(.webchat__send-box-text-box){position:absolute;right:6px;bottom:4px}' +
     '.fbxc .fbxc-body .webchat__stacked-layout__avatar-gutter{display:none !important}' +
     '.fbxc .fbxc-body .webchat__stacked-layout__main{padding-left:0}' +
     '.fbxc .fbxc-body .webchat__bubble__content,.fbxc .fbxc-body .webchat__bubble__content p,.fbxc .fbxc-body .webchat__bubble__content li,.fbxc .fbxc-body .webchat__text-content{font-size:15px !important;line-height:1.6 !important;margin:0 !important}' +
     '.fbxc .fbxc-body .webchat__bubble__content p + p{margin-top:8px !important}' +
     '.fbxc .fbxc-body .webchat__send-box-text-box__input,.fbxc .fbxc-body .webchat__send-box-text-box__text-area{font-size:15px !important}' +
     '.pva-embedded-web-chat-window-container > div > div:first-child.fbxc-head svg,.pva-embedded-web-chat-window-container > div > div:first-child.fbxc-head svg *{fill:none !important;stroke:currentColor !important}' +
-    '.fbxc .fbxc-fab svg,.fbxc .fbxc-fab svg *{fill:none !important;stroke:currentColor !important}' +
     '.fbxc .fbxc-body .webchat__send-box-text-box,.fbxc .fbxc-body .webchat__send-box-text-box *,.fbxc .fbxc-body .webchat__auto-resize-textarea{background:transparent !important;box-shadow:none !important;outline:none !important}' +
+    '.pva-embedded-web-chat-window-container > div > div:first-child.fbxc-head{gap:0 !important;padding-right:20px !important}' +
+    '.fbxc-tip{position:fixed;z-index:2147483646;pointer-events:none;background:#fff;color:#242424;font:400 14px/20px Inter,"Segoe UI",system-ui,sans-serif;padding:5px 11px 7px;border-radius:4px;box-shadow:0 0 2px rgba(0,0,0,.12),0 8px 16px rgba(0,0,0,.14);white-space:nowrap;opacity:0;transition:opacity 120ms ease-out}' +
+    '.fbxc-tip.on{opacity:1}' +
+    '.fbxc-tip::after{content:"";position:absolute;left:var(--seta,50%);bottom:-4px;width:8px;height:8px;background:#fff;transform:translateX(-50%) rotate(45deg)}' +
+    '.fbxc-tip.baixo::after{bottom:auto;top:-4px}' +
     '.fbxc .fbxc-foot{flex:0 0 auto;padding:4px 20px 12px;font-size:12px;line-height:1.4;color:var(--fbx-chat-text-2) !important;background:var(--fbx-chat-bg) !important}' +
-    '@media (max-width:600px){.fbxc .pva-embedded-web-chat-window-container.fbxc-box{inset:0;width:100vw;height:100dvh;border-radius:0 !important}.fbxc .fbxc-fab{right:16px;bottom:16px}}';
+    '';
   var st = document.createElement('style'); st.textContent = css; document.head.appendChild(st);
 
   var logo = base + 'assets/img/Logo-sm-64.png';
   var raiz = document.createElement('div'); raiz.className = 'pva-floating-style fbxc';
   raiz.innerHTML =
-    '<div class="pva-embedded-web-chat-widget fbxc-fab"><button type="button" aria-label="' + TX.abrir + '" title="' + TX.abrir + '">' +
-      '<svg viewBox="0 0 24 24" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></button></div>' +
+    '<div class="fbxc-fab"><div class="pva-embedded-web-chat-widget"><button type="button" aria-label="' + TX.abrir + '" title="' + TX.abrir + '"></button></div></div>' +
     '<div class="pva-embedded-web-chat-window-container fbxc-box" role="dialog" aria-label="Copilot FBX"><div>' +
       '<div class="fbxc-head"><div class="fbxc-t"><img src="' + logo + '" alt="">Copilot FBX</div>' +
         '<button type="button" class="fbxc-nova" aria-label="' + TX.nova + '" title="' + TX.nova + '"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 5.5A1.5 1.5 0 0 1 5.5 4h13A1.5 1.5 0 0 1 20 5.5v10a1.5 1.5 0 0 1-1.5 1.5H9l-5 4z"/><path d="M12 7.5v6M9 10.5h6"/></svg></button>' +
-        '<button type="button" class="fbxc-x" aria-label="' + TX.fechar + '" title="' + TX.fechar + '"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6L6 18"/></svg></button></div>' +
+        '<button type="button" class="fbxc-x" aria-label="' + TX.fechar + '" title="' + TX.fechar + '"><svg viewBox="0 0 24 24" stroke-width="1.5" stroke-linecap="round" aria-hidden="true"><path d="M4.5 4.5l15 15M19.5 4.5l-15 15"/></svg></button></div>' +
       '<div class="fbxc-body"><div class="fbxc-msg">…</div></div>' +
       '<div class="fbxc-foot">' + TX.aviso + '</div>' +
     '</div></div>';
@@ -88,6 +93,24 @@
   fab.querySelector('button').addEventListener('click', abre);
   raiz.querySelector('.fbxc-x').addEventListener('click', fecha);
   raiz.querySelector('.fbxc-nova').addEventListener('click', conversa);
+  /* balão de dica igual ao do Power Pages (o title nativo não tem o mesmo visual) */
+  var dica = document.createElement('div'); dica.className = 'fbxc-tip'; dica.setAttribute('aria-hidden', 'true'); document.body.appendChild(dica);
+  function mostra(b) {
+    dica.textContent = b.getAttribute('aria-label'); dica.className = 'fbxc-tip';
+    var r = b.getBoundingClientRect(), w = dica.offsetWidth, h = dica.offsetHeight;
+    var x = Math.min(Math.max(8, r.left + r.width / 2 - w / 2), window.innerWidth - w - 8);
+    var y = r.top - h - 10, embaixo = y < 8; if (embaixo) y = r.bottom + 10;
+    dica.style.left = x + 'px'; dica.style.top = y + 'px';
+    dica.style.setProperty('--seta', (r.left + r.width / 2 - x) + 'px');
+    dica.className = 'fbxc-tip on' + (embaixo ? ' baixo' : '');
+  }
+  function esconde() { dica.className = 'fbxc-tip'; }
+  [].forEach.call(raiz.querySelectorAll('button[aria-label]'), function (b) {
+    b.removeAttribute('title');
+    b.addEventListener('mouseenter', function () { if (matchMedia('(hover:hover)').matches) mostra(b); });
+    b.addEventListener('focus', function () { if (b.matches(':focus-visible')) mostra(b); });
+    b.addEventListener('mouseleave', esconde); b.addEventListener('blur', esconde); b.addEventListener('click', esconde);
+  });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && aberto) fecha(); });
   document.addEventListener('click', function (e) { var b = e.target.closest && e.target.closest('[data-fbx-open-chat]'); if (b) { e.preventDefault(); abre(); } });
 })();
