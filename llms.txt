@@ -1,6 +1,6 @@
 # FBX
 
-> Apps, automações, portais e agentes em Power Platform, com SAP, Databricks e APIs. 15 projetos com arquitetura, decisões e demo.
+> Luigi Funaro: agentes de IA, apps e automações com Power Platform, Copilot Studio, Microsoft Foundry, SAP, Databricks, Azure e AWS. 19 projetos com demo.
 
 FBX is the independent practice of Luigi Funaro (Londrina, Brazil; remote). It designs and builds Microsoft Power Platform solutions (Power Apps, Power Automate, Power Pages, Copilot Studio, Dataverse, SharePoint, Power BI) and integrations with SAP S/4HANA, Databricks, AWS and REST APIs, plus AI agents and WhatsApp automation (n8n). Languages: Portuguese, English, Spanish. Contact: dev.luigifunaro@outlook.com
 
@@ -8,7 +8,7 @@ FBX is the independent practice of Luigi Funaro (Londrina, Brazil; remote). It d
 - [AWS agent answering in Teams](https://dev-fbx.github.io/en-US/page/agente-aws-teams/): The intelligence stays on AWS, close to the company's data, and employees talk to it in Teams. The Microsoft 365 Agents SDK runs in a Lambda function and…
 - [Agent with an Adaptive Card in Teams](https://dev-fbx.github.io/en-US/page/agente-azure-adaptive-card/): A custom bot written with the Microsoft 365 Agents SDK and hosted on Azure. The answer streams in with Teams' progress bubble and, at the end of the…
 - [Copilot Studio agent](https://dev-fbx.github.io/en-US/page/agente-copilot-studio/): It answers questions about Luigi's profile and the portfolio projects in English, Portuguese and Spanish, and it doesn't make things up: if it can't cite a…
-- [OrderSupply (app)](https://dev-fbx.github.io/en-US/page/app-ordersupply/): Apps, automations, portals and agents on Power Platform, with SAP, Databricks and APIs. 15 projects with architecture, decisions and demos.
+- [OrderSupply (app)](https://dev-fbx.github.io/en-US/page/app-ordersupply/): Luigi Funaro: AI agents, apps and automations with Power Platform, Copilot Studio, Microsoft Foundry, SAP, Databricks, Azure and AWS. 19 projects with demos.
 - [App generated from a prompt in Vibe](https://dev-fbx.github.io/en-US/page/app-vibe/): One sentence in Vibe became a five-table data model and a React support-queue app. Here is what came ready, what was left to decide and what it takes to…
 - [Canvas App with AI](https://dev-fbx.github.io/en-US/page/canvas-com-ia/): A chat inside Power Apps that answers with Claude, called directly from an AI Builder prompt. No flow in between and no server of its own.
 - [Central de Monitoramentos](https://dev-fbx.github.io/en-US/page/central-de-monitoramentos/): A monitor's owner creates it, sets the schedule and guarantees the data; the engine fires on its own every hour; each notified person sees only their own…
